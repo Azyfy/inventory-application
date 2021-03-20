@@ -4,14 +4,14 @@ const Schema = mongoose.Schema;
 
 const CarSchema = new Schema(
     {
-        model: { type: string, required: true, maxlength: 20 },
+        model: { type: String, required: true, maxlength: 20 },
         manufacturer: { type: Schema.Types.ObjectId, ref: "Manufacturer", required: true },
         category: { type: Schema.Types.ObjectId, ref: "Category" },
-        m_year_start: { type: number, min: 1886 },
-        m_year_end: { type: number, min: 1886 },
-        horsepower: { type: number, min: 1 },
-        top_speed: { type: number, min: 1 },
-        price: { type: number, min: 1, required: true }
+        m_year_start: { type: Number, min: 1886 },
+        m_year_end: { type: Number, min: 1886 },
+        horsepower: { type: Number, min: 1 },
+        top_speed: { type: Number, min: 1 },
+        price: { type: Number, min: 1, required: true }
     }
 );
 
