@@ -5,7 +5,6 @@ const Schema = mongoose.Schema;
 const ManufacturerSchema = new Schema (
     {
         name: { type: String, required: true },
-        car: { type: Schema.Types.ObjectId, ref: "Car", required: true },
         country: { type: String }
     }
 );

@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 const CategorySchema = new Schema (
     {
-        car: { type: Schema.Types.ObjectId, ref: "Car", required: true },
         category: { type: String, required: true, enum: ["Exotic", "Muscle", "Tuner"] }
     }
 );
