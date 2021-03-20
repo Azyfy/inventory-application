@@ -10,7 +10,8 @@ const CarSchema = new Schema(
         m_year_start: { type: number, min: 1886 },
         m_year_end: { type: number, min: 1886 },
         horsepower: { type: number, min: 1 },
-        top_speed: { type: number, min: 1 }
+        top_speed: { type: number, min: 1 },
+        price: { type: number, min: 1, required: true }
     }
 );
 
@@ -20,5 +21,13 @@ CarSchema
 .get( function () {
     return "/inventory/car/" + this._id;
 });
+
+// Virtual for cars manufacturer-model name
+CarSchema
+.virtual("name")
+.get( function () {
+    return this.manufacturer + " " + this.model;
+});
+
 
 module.exports = mongoose.model("Car", CarSchema);
