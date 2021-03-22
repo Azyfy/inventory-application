@@ -5,9 +5,7 @@ var router = express.Router();
 const car_controller = require("../controllers/carController");
 
 
-router.get('/', function(req, res, next) {
-    res.render('index', { title: 'Test!' });
-  });
+router.get('/',  car_controller.inventory_index);
 
 // get car list
 router.get("/cars", car_controller.car_list);
