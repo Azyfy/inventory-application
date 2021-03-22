@@ -1,15 +1,16 @@
 extends layout
 
 block content
-  h1= title
 
-  div(class="d-flex flex-column")
-    a(href="/inventory") 
-      button Inventory
-    a(href="/") 
-      button back
-    a(href="/inventory/cars") 
-      button Cars
+  ul(class="nav nav-tabs justify-content-center")
+    li.nav-item
+        a(class="nav-link" href="/") Home
+    li.nav-item
+        a(class="nav-link" href="/inventory") Inventory
+    li.nav-item
+        a(class="nav-link" href="/cars") Cars
+
+  h1= title
 
   if error
     p Error getting dynamic content.
@@ -18,5 +19,5 @@ block content
 
     ul
       li #[strong Cars:] !{data.car_count}
-      li #[strong Manufacturer:] !{data.manufacturer_count}
+      li #[strong Manufacturers:] !{data.manufacturer_count}
       li #[strong Categories:] !{data.category_count}
