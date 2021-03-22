@@ -5,9 +5,10 @@ block content
   p This line has an un-escaped string: !{'<em> is emphasised</em>'}, an escaped string: #{'<em> is not emphasised</em>'}, and escaped variables: #{title}
   p= 'Evaluated and <em>escaped expression</em>:' + title
 
-  a(href="/inventory") 
-    button Inventory
-  a(href="/") 
-    button back
-  a(href="/inventory/cars") 
-    button Cars
+  div(class="d-flex flex-column")
+    a(href="/inventory") 
+      button Inventory
+    a(href="/") 
+      button back
+    a(href="/inventory/cars") 
+      button Cars
