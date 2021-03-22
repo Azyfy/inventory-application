@@ -2,7 +2,7 @@ const Car = require("../models/car");
 
 // Display car list
 exports.car_list = (req, res) => {
-    res.send('NOT IMPLEMENTED: Author list');
+    res.send('NOT IMPLEMENTED: Car list');
 };
 
 // Display details of a car
