@@ -1,0 +1,11 @@
+extends inventory
+
+block content
+  h1= title
+
+  div 
+    ul 
+        each car in cars 
+            li
+                a(href=car.url) #{car.model}            
+                a(href=car.manufacturer.url) #{car.manufacturer.name}

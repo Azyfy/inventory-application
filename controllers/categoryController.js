@@ -1,4 +1,5 @@
 const Category = require("../models/category");
+const Car = require("../models/car");
 
 const async = require("async");
 
@@ -15,8 +16,30 @@ exports.category_list = (req, res, next) => {
 };
 
 // Display category detail
-exports.category_detail = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.category_detail = (req, res, next) => {
+
+    async.parallel({
+        category: (callback) => {
+            Category.findById(req.params.id)
+                .exec(callback);
+        },
+        car: (callback) => {
+            Car.find({ "category": req.params.id })
+                .populate("manufacturer")
+                .exec(callback);
+        },
+    },  (err, results) => {
+            if(err) { return next(err); }
+
+            if(results.category == null) {
+                let err = new Error ("Category not found");
+                err.status = 404;
+                return next(err);
+            }
+
+            res.render("category_detail", { title: results.category.category, cars: results.car } );
+    }
+    );
 };
 
 // Display category create form on GET
