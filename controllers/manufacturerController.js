@@ -1,4 +1,5 @@
 const Manufacturer = require("../models/manufacturer");
+const Car = require("../models/car");
 
 const async = require("async");
 
@@ -15,8 +16,31 @@ exports.manufacturer_list = (req, res, next) => {
 };
 
 // Display details of manufacturer
-exports.manufacturer_detail = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.manufacturer_detail = (req, res, next) => {
+    
+    async.parallel({
+
+        manufacturer: (callback) => {
+            Manufacturer.findById(req.params.id)
+                .exec(callback);
+        },
+
+        car: (callback) => {
+            Car.find({ "manufacturer": req.params.id })
+                .exec(callback);
+        },
+    },  (err, results) => {
+            if(err) { return next(err); }
+
+            if(results.manufacturer == null) {
+                let err = new Error ("Manufacturer not found");
+                err.status = 404;
+                return next(err);
+            }
+
+            res.render("manufacturer_detail", { title: results.manufacturer.name, manufacturer: results.manufacturer, cars: results.car });
+    }
+    );
 };
 
 // Display manufacturer create form on GET

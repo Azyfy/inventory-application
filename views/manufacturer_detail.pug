@@ -1,0 +1,14 @@
+extends inventory
+
+block content
+  h1= title
+
+  p #[strong Country:] #{manufacturer.country}
+
+
+
+  div
+    ul  
+        each car in cars
+            li 
+                a(href=car.url) #{car.model}
