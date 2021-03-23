@@ -1,0 +1,13 @@
+extends inventory
+
+block content
+
+    h1= title 
+
+    ul
+        each category in category_list
+            li 
+                a(href=category.url) #{category.category} 
+        
+        else 
+            li There are no cars in stock
