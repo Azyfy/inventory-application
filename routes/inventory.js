@@ -88,8 +88,4 @@ router.post("/manufacturer/:id/delete", manufacturer_controller.manufacturer_del
 router.get("/manufacturer/:id/update", manufacturer_controller.manufacturer_update_get);
 router.post("/manufacturer/:id/update", manufacturer_controller.manufacturer_update_post);
 
-
-
-
-
 module.exports = router;
