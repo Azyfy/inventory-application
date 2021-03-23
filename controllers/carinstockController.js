@@ -7,6 +7,14 @@ const async = require("async");
 // Display carsinstock list
 exports.carsinstock_list = (req, res, next) => {
 
+    CarsInStock.find()
+        .populate("car")
+        .exec( (err, list_carsinstock) => {
+            if(err) { return next(err); }
+
+            res.render("carsinstock_list", { title: "Cars in stock", carsinstock_list: list_carsinstock });
+        });
+
 };
 
 // Display details of carsinstock
