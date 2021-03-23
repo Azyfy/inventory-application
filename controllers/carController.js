@@ -37,8 +37,34 @@ exports.car_list = (req, res, next) => {
 };
 
 // Display details of a car
-exports.car_detail = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.car_detail = (req, res, next) => {
+   
+    async.parallel({
+        car: (callback) => {
+
+            Car.findById(req.params.id)
+                .populate("manufacturer")
+                .populate("category")
+                .exec(callback);
+        },
+        in_stock: (callback) => {
+
+            CarsInStock.find({ "car": req.params.id})
+                .exec(callback);
+        },
+    },
+        (err, results) => {
+            if(err) { return next(err); }
+
+            if(results.car == null) {
+                let err = new Error ("Car no found");
+                err.status = 404;
+                return next(err);
+            }
+
+            res.render("car_detail", { title: results.car.model, car: results.car, in_stock: results.in_stock[0] }) 
+        }
+    );
 };
 
 // Display car create form on GET
