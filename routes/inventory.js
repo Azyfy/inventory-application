@@ -4,6 +4,7 @@ var router = express.Router();
 // controller models
 const car_controller = require("../controllers/carController");
 const carsinstock_controller = require("../controllers/carinstockController");
+const category_controller = require("../controllers/categoryController");
 
 
 router.get('/',  car_controller.inventory_index);
@@ -49,6 +50,25 @@ router.post("/carsinstock/:id/update", carsinstock_controller.carsinstock_update
 
 
 
+
+// CATEGORY ROUTES
+// get category list
+router.get("/category_list", category_controller.category_list);
+
+// get category details
+router.get("/category/:id", category_controller.category_detail);
+
+// get and post category create form
+router.get("/category/create", category_controller.category_create_get);
+router.post("/category/create", category_controller.category_create_post);
+
+// get and post category delete
+router.get("/category/:id/delete", category_controller.category_delete_get);
+router.post("/category/:id/delete", category_controller.category_delete_post);
+
+// get and post category update
+router.get("/category/:id/update", category_controller.category_update_get);
+router.post("/category/:id/update", category_controller.category_update_post);
 
 
 
