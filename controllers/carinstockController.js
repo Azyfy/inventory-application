@@ -18,7 +18,7 @@ exports.carsinstock_list = (req, res, next) => {
 };
 
 // Display details of carsinstock
-exports.carsinstock_detail = (req, res) => {
+exports.carsinstock_detail = (req, res, next) => {
     res.send('NOT IMPLEMENTED');
 };
 
