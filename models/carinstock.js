@@ -13,7 +13,7 @@ const CarInStockSchema = new Schema (
 CarInStockSchema
 .virtual("url")
 .get( function () {
- return "/inventory/carinstock/" + this._id;
+ return "/inventory/carsinstock/" + this._id;
 });
 
 module.exports = mongoose.model("CarInStock", CarInStockSchema);
