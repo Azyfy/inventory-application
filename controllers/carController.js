@@ -24,8 +24,16 @@ exports.inventory_index = function (req, res)  {
 };
 
 // Display car list
-exports.car_list = (req, res) => {
-    res.send('NOT IMPLEMENTED: Car list');
+exports.car_list = (req, res, next) => {
+    
+    Car.find({}, "model manufacturer")
+        .populate("manufacturer")
+        .exec( (err, list_cars) => {
+            if (err) { return next(err); }
+
+            res.render("car_list", { title: "Car List", car_list: list_cars });
+        });
+
 };
 
 // Display details of a car

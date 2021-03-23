@@ -8,7 +8,7 @@ const car_controller = require("../controllers/carController");
 router.get('/',  car_controller.inventory_index);
 
 // get car list
-router.get("/cars", car_controller.car_list);
+router.get("/car_list", car_controller.car_list);
 
 // get car details
 router.get("/car/:id", car_controller.car_detail);
