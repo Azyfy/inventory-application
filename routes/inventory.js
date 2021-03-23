@@ -5,7 +5,7 @@ var router = express.Router();
 const car_controller = require("../controllers/carController");
 const carsinstock_controller = require("../controllers/carinstockController");
 const category_controller = require("../controllers/categoryController");
-
+const manufacturer_controller = require("../controllers/manufacturerController");
 
 router.get('/',  car_controller.inventory_index);
 
@@ -49,8 +49,6 @@ router.get("/carsinstock/:id/update", carsinstock_controller.carsinstock_update_
 router.post("/carsinstock/:id/update", carsinstock_controller.carsinstock_update_post);
 
 
-
-
 // CATEGORY ROUTES
 // get category list
 router.get("/category_list", category_controller.category_list);
@@ -70,6 +68,25 @@ router.post("/category/:id/delete", category_controller.category_delete_post);
 router.get("/category/:id/update", category_controller.category_update_get);
 router.post("/category/:id/update", category_controller.category_update_post);
 
+
+// MANUFACTURER ROUTES
+// get manufacturer list
+router.get("/manufacturer_list", manufacturer_controller.manufacturer_list);
+
+// get manufacturer details
+router.get("/manufacturer/:id", manufacturer_controller.manufacturer_detail);
+
+// get and post manufacturer create form
+router.get("/manufacturer/create", manufacturer_controller.manufacturer_create_get);
+router.post("/manufacturer/create", manufacturer_controller.manufacturer_create_post);
+
+// get and post manufacturer delete
+router.get("/manufacturer/:id/delete", manufacturer_controller.manufacturer_delete_get);
+router.post("/manufacturer/:id/delete", manufacturer_controller.manufacturer_delete_post);
+
+// get and post manufacturer update
+router.get("/manufacturer/:id/update", manufacturer_controller.manufacturer_update_get);
+router.post("/manufacturer/:id/update", manufacturer_controller.manufacturer_update_post);
 
 
 
