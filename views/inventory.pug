@@ -10,6 +10,12 @@ block content
     p The inventory has the following record counts:
 
     ul
-      li #[strong Cars:] !{data.car_count}
-      li #[strong Manufacturers:] !{data.manufacturer_count}
-      li #[strong Categories:] !{data.category_count}
+      li 
+        a(href="/inventory/car_list") #[strong Cars:] 
+        |  !{data.car_count}
+      li 
+        a(href="/inventory/manufacturer_list")  #[strong Manufacturers:] 
+        |  !{data.manufacturer_count}
+      li 
+        a(href="/inventory/category_list") #[strong Categories:] 
+        |  !{data.category_count}
