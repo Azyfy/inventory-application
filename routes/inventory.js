@@ -53,12 +53,12 @@ router.post("/carsinstock/:id/update", carsinstock_controller.carsinstock_update
 // get category list
 router.get("/category_list", category_controller.category_list);
 
-// get category details
-router.get("/category/:id", category_controller.category_detail);
-
 // get and post category create form
 router.get("/category/create", category_controller.category_create_get);
 router.post("/category/create", category_controller.category_create_post);
+
+// get category details
+router.get("/category/:id", category_controller.category_detail);
 
 // get and post category delete
 router.get("/category/:id/delete", category_controller.category_delete_get);
