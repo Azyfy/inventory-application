@@ -1,0 +1,46 @@
+extends inventory
+
+block content
+  h1= title
+
+  form(method='POST' action='')
+    div.form-group
+      label(for='model') Model:
+      input#model.form-control(type='text', placeholder='Car model' name='model' required='true' value=(undefined===car ? '' : car.model) )
+    div.form-group
+      label(for='manufacturer') Manufacturer:
+      select#manufacturer.form-control(type='select', placeholder='Select manufacturer' name='manufacturer' required='true' )
+        for manufacturer in manufacturers
+          if car
+            option(value=manufacturer._id selected=(manufacturer._id.toString()===car.manufacturer._id.toString() ? 'selected' : false) ) #{manufacturer.name}
+          else
+            option(value=manufacturer._id) #{manufacturer.name}
+    div.form-group
+            label(for='category') Category:
+            select#category.form-control(type='select', name='category', placeholder='Select category' required='true')
+                for category in categories
+                    if car
+                        option(value=category._id selected=(category._id.toString()===car.category._id.toString() ? 'selected' : false) ) #{category.category}
+                    else
+                        option(value=category._id) #{category.name}
+    div.form-group
+        label(for='m_year_start') Year manufacture started:
+        input#m_year_start.form-control(type='number', placeholder='Start of manufacturing' name='m_year_start' required='true' value=(undefined===car ? '' : car.m_year_start) )
+    div.form-group
+        label(for='m_year_end') Year manufacture ended:
+        input#m_year_start.form-control(type='number', placeholder='End of manufacturing' name='m_year_end' required='true' value=(undefined===car ? '' : car.m_year_end) )
+    div.form-group
+        label(for='horsepower') Horsepower:
+        input#horsepower.form-control(type='number', placeholder='bhp' name='horsepower' required='true' value=(undefined===car ? '' : car.horsepower) )
+    div.form-group
+        label(for='top_speed') Top speed:
+        input#top_speed.form-control(type='number', placeholder='km/h' name='top_speed' required='true' value=(undefined===car ? '' : car.top_speed) )
+    div.form-group
+        label(for='price') Price:
+        input#price.form-control(type='number', placeholder='price' name='price' required='true' value=(undefined===car ? '' : car.price) )
+    button.btn.btn-primary(type='submit') Submit
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
