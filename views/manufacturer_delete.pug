@@ -1,0 +1,26 @@
+extends inventory
+
+block content
+  h1 #{title}: #{manufacturer.name}
+
+  if manufacturer_cars.length
+
+    p #[strong Delete the following cars before attempting to delete this manufacturer.]
+
+    div(style='margin-left:20px;margin-top:20px')
+
+      h4 Cars
+
+      ul
+      each car in manufacturer_cars
+        li
+          a(href=car.url) #{car.model}
+
+  else
+    p Do you really want to delete this manufacturer?
+
+    form(method='POST' action='')
+      div.form-group
+        input#manufacturerid.form-control(type='hidden',name='manufacturerid', required='true', value=manufacturer._id )
+
+      button.btn.btn-primary(type='submit') Delete

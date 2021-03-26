@@ -103,13 +103,58 @@ exports.manufacturer_create_post = [
 ];
 
 // Display manufacturer delete form on GET
-exports.manufacturer_delete_get = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.manufacturer_delete_get = (req, res, next) => {
+    
+    async.parallel({
+        manufacturer: (callback) => {
+            Manufacturer.findById(req.params.id).exec(callback);
+        },
+        manufacturers_cars: (callback) => {
+            Car.find({"manufacturer": req.params.id}).exec(callback);
+        },
+    },
+        (err, results) => {
+            if(err) { return next(err); }
+
+            if (results.manufacturer == null) {
+                res.redirect("/inventory/manufacturer_list");
+            }
+            // Successful
+            res.render("manufacturer_delete", { title: "Delete manufacturer", manufacturer: results.manufacturer, manufacturer_cars: results.manufacturers_cars } );
+        }
+    );
 };
 
 // Handle manufacturer delete on POST
-exports.manufacturer_delete_post = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.manufacturer_delete_post = (req, res, next) => {
+    
+    async.parallel({
+       manufacturer: (callback) => {
+           Manufacturer.findById(req.body.manufacturerid).exec(callback);
+       },
+       manufacturers_cars: (callback) => {
+            Car.find({"manufacturer": req.body.manufacturerid}).exec(callback);
+       }, 
+    },  (err, results) => {
+        if(err) { return next(err); }
+
+        // Success
+        if(results.manufacturers_cars.length > 0) {
+            //got cars
+            res.render("manufacturer_delete", { title: "Delete manufacturer", manufacturer: results.manufacturer, manufacturer_cars: results.manufacturers_cars});
+            return;
+        }
+        else {
+            //no cars
+            Manufacturer.findByIdAndRemove(req.body.manufacturerid, function deleteManufacturer(err) {
+                if(err) { return next(err); }
+
+                res.redirect("/inventory/manufacturer_list");
+            });
+        }
+    }
+    );
+
 };
 
 // Display manufacturer update form on GET
