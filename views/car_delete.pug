@@ -1,0 +1,14 @@
+extends inventory
+
+block content
+  h1 #{title}: #{car.model}
+  p Manufacturer: #{car.manufacturer.name}
+
+  div
+    p Do you really want to delete this car?
+
+    form(method='POST' action='')
+      div.form-group
+        input#carid.form-control(type='hidden',name='carid', required='true', value=car._id )
+
+      button.btn.btn-primary(type='submit') Delete

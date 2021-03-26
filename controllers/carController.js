@@ -152,13 +152,25 @@ exports.car_create_post = [
 ];
 
 // Display car delete form on GET
-exports.car_delete_get = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.car_delete_get = (req, res, next) => {
+
+    Car.findById(req.params.id).populate("manufacturer").exec( (err, car) => {
+        if(err) { return next(err); }
+
+        res.render("car_delete", { title: "Delete car", car: car });
+    });
+
 };
 
 // Handle car delete on POST
-exports.car_delete_post = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.car_delete_post = (req, res, next) => {
+    
+    Car.findByIdAndRemove(req.body.carid, function deleteCar(err) {
+        if(err) { return next(err); }
+
+        res.redirect("/inventory/car_list");
+    });
+
 };
 
 // Display car update form on GET
