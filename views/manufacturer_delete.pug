@@ -22,5 +22,8 @@ block content
     form(method='POST' action='')
       div.form-group
         input#manufacturerid.form-control(type='hidden',name='manufacturerid', required='true', value=manufacturer._id )
+        input#manufactorer-password.form-control(type="text", name="password", required="true", placeholder="Enter secret password to delete")
+        if error 
+          p.text-danger #{error}
 
       button.btn.btn-primary(type='submit') Delete

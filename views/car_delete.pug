@@ -10,5 +10,6 @@ block content
     form(method='POST' action='')
       div.form-group
         input#carid.form-control(type='hidden',name='carid', required='true', value=car._id )
+        input#car-password.form-control(type="text", name="password", required="true", placeholder="Enter secret password to delete")
 
       button.btn.btn-primary(type='submit') Delete

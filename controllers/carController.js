@@ -164,12 +164,22 @@ exports.car_delete_get = (req, res, next) => {
 
 // Handle car delete on POST
 exports.car_delete_post = (req, res, next) => {
-    
-    Car.findByIdAndRemove(req.body.carid, function deleteCar(err) {
-        if(err) { return next(err); }
 
-        res.redirect("/inventory/car_list");
-    });
+    body("password", "Password does not match").trim().escape().equals("secretpoassword")
+
+    if ( req.body.password === "secretpassword" ) {
+
+        Car.findByIdAndRemove(req.body.carid, function deleteCar(err) {
+            if(err) { return next(err); }
+
+            res.redirect("/inventory/car_list");
+        });
+    }
+    else {
+        let err = new Error("Secret password does not match secretpassword");
+        return next(err);
+    }
+ 
 
 };
 

@@ -127,6 +127,8 @@ exports.manufacturer_delete_get = (req, res, next) => {
 
 // Handle manufacturer delete on POST
 exports.manufacturer_delete_post = (req, res, next) => {
+
+    body("password", "Password does not match").trim().escape().equals("secretpoassword"),
     
     async.parallel({
        manufacturer: (callback) => {
@@ -146,11 +148,18 @@ exports.manufacturer_delete_post = (req, res, next) => {
         }
         else {
             //no cars
+
+            if (req.body.password === "secretpassword") {
+
             Manufacturer.findByIdAndRemove(req.body.manufacturerid, function deleteManufacturer(err) {
                 if(err) { return next(err); }
 
                 res.redirect("/inventory/manufacturer_list");
             });
+            }
+            else {
+                res.render("manufacturer_delete", { title: "Delete manufacturer", manufacturer: results.manufacturer, manufacturer_cars: results.manufacturers_cars, error: "Secret password does not match secretpassword" } );
+            }
         }
     }
     );
@@ -159,6 +168,7 @@ exports.manufacturer_delete_post = (req, res, next) => {
 
 // Display manufacturer update form on GET
 exports.manufacturer_update_get = (req, res, next) => {
+
     
     Manufacturer.findById(req.params.id, function (err, manufacturer) {
         if(err) { return next(err); }
