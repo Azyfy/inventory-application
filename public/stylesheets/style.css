@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+#background {
+  background-image: url("../images/background.jpg");
+  background-color: black;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  height: 500px;
+}
