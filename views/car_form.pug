@@ -12,7 +12,8 @@ block content
       select#manufacturer.form-control(type='select', placeholder='Select manufacturer' name='manufacturer' required='true' )
         for manufacturer in manufacturers
           if car
-            option(value=manufacturer._id selected=(manufacturer._id.toString()===car.manufacturer._id.toString() ? 'selected' : false) ) #{manufacturer.name}
+            //- Handle GET form, where car.manufacturer is an object, and POST form, where it is a string.
+            option(value=manufacturer._id selected=(manufacturer._id.toString()=== car.manufacturer.id || car.manufacturer._id.toString() ? 'selected' : false) ) #{manufacturer.name}
           else
             option(value=manufacturer._id) #{manufacturer.name}
     div.form-group
@@ -20,7 +21,7 @@ block content
             select#category.form-control(type='select', name='category', placeholder='Select category' required='true')
                 for category in categories
                     if car
-                        option(value=category._id selected=(category._id.toString()===car.category._id.toString() ? 'selected' : false) ) #{category.category}
+                        option(value=category._id selected=(category._id.toString()===car.category.id || car.category._id.toString() ? 'selected' : false) ) #{category.category}
                     else
                         option(value=category._id) #{category.name}
     div.form-group

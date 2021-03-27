@@ -174,11 +174,96 @@ exports.car_delete_post = (req, res, next) => {
 };
 
 // Display car update form on GET
-exports.car_update_get = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.car_update_get = (req, res, next) => {
+    
+    async.parallel({
+        car: (callback) => {
+            Car.findById(req.params.id).populate("manufacturer")
+                .populate("category")
+                .exec(callback);
+        },
+        manufacturers: (callback) => {
+            Manufacturer.find(callback);
+        },
+        categories: (callback) => {
+            Category.find(callback);
+        }, 
+    },  (err, results) => {
+        if(err) { return next(err); }
+        if(results.car==null) {
+            let err = new Error("Car not found");
+            err.status = 404;
+            return next(err);
+        }
+
+        //is oki
+        res.render("car_form", { title: "Update car", car: results.car, manufacturers: results.manufacturers, categories: results.categories })
+    }
+    );
 }
 
 // Handle car update on POST
-exports.car_update_post = (req, res) => {
-    res.send('NOT IMPLEMENTED');
-};
+exports.car_update_post = [
+
+    //same code as for creating just added _id(so no new is assigned) and at the end is to update
+    // vali and sani
+    body("model", "Model cant be empty").trim().isLength({min: 1}).escape(),
+    body("manufacturer", "Manufacturer cant be empty").trim().isLength({min: 1}).escape(),
+    body("category", "Category cant be empty").trim().isLength({min: 1}).escape(),
+    body("m_year_start", "Year start cant be empty").trim().isLength({min: 4, max: 4}).escape(),
+    body("m_year_end", "Year end cant be empty").trim().isLength({min: 4, max: 4}).escape(),
+    body("horsepower", "Horsepower cant be empty").trim().isLength({min: 1}).escape(),
+    body("top_speed", "Top speed cant be empty").trim().isLength({min: 1}).escape(),
+    body("price", "Price cant be empty").trim().isLength({min: 1}).escape(),
+
+    (req, res, next) => {
+
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        // Create a car object with escaped and trimmed data.
+        let car = new Car(
+            {
+                model: req.body.model,
+                manufacturer: req.body.manufacturer,
+                category: req.body.category,
+                m_year_start: req.body.m_year_start,
+                m_year_end: req.body.m_year_end,
+                horsepower: req.body.horsepower,
+                top_speed: req.body.top_speed,
+                price: req.body.price,
+                _id: req.params.id //This is required, or a new ID will be assigned!
+            }
+        );
+
+        if(!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/errors messages.
+
+            // Get all stuffs for form.
+            async.parallel({
+                manufacturers: (callback) => {
+                    Manufacturer.find(callback);
+                },
+                categories: (callback) => {
+                    Category.find(callback);
+                },
+            },  (err, results) => {
+                    if(err) {return next(err); }
+            
+                    res.render("car_form", { title: "Add a car", manufacturers: results.manufacturers, categories: results.categories, car: car, errors: errors.array() })
+            }
+            );
+            return;
+        }
+        else {
+             // Data from form is valid. Update it.
+             Car.findByIdAndUpdate( req.params.id, car, {}, function (err, thecar) {
+                 if(err) { return next(err); }
+                 //successful - redirect to the car
+                 res.redirect(thecar.url);
+             });
+        }
+    }
+
+  
+]
