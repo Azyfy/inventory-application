@@ -158,11 +158,70 @@ exports.manufacturer_delete_post = (req, res, next) => {
 };
 
 // Display manufacturer update form on GET
-exports.manufacturer_update_get = (req, res) => {
-    res.send('NOT IMPLEMENTED');
+exports.manufacturer_update_get = (req, res, next) => {
+    
+    Manufacturer.findById(req.params.id, function (err, manufacturer) {
+        if(err) { return next(err); }
+
+        if(manufacturer ==  null) {
+            let err = new Error ("Manufacturer not found");
+            err.status = 404;
+            return next(err);
+        }
+
+        res.render("manufacturer_form", { title: "Update manufacturer", manufacturer: manufacturer });
+    });
+
 }
 
 // Handle manufacturer update on POST
-exports.manufacturer_update_post = (req, res) => {
-    res.send('NOT IMPLEMENTED');
-};
+exports.manufacturer_update_post = [
+
+      // validate and sanitize
+      body("name", "Manufacturer name required").trim().isLength({min: 1}).escape(),
+      body("country").trim().isLength({min: 1}).escape().withMessage("Country required"),
+  
+      //process req after v and s
+      (req, res, next) => {
+  
+           // extract validation error from a request
+           const errors = validationResult(req);
+  
+           // create category object with escapred and trimmed data
+           const manufacturer = new Manufacturer(
+               {
+                   name: req.body.name,
+                   country: req.body.country,
+                   _id: req.params.id //This is required, or a new ID will be assigned!
+               }
+           );
+  
+           if (!errors.isEmpty()) {
+               // There are errors. Render form again with sanitized values/errors messages.
+               res.render("manufacturer_form", { title: "Add manufacturer", manufacturer: req.body, errors: errors.array() });
+           }
+           else
+               // Data from form is valid.
+               // Check if manufacturer with same name already exists.
+  
+               Manufacturer.findOne({"name": req.body.name})
+                          .exec( (err, found_manufacturer) => {
+                              if(err) { return next(err); }
+                              
+                              if(found_manufacturer) {
+                                   // manufacturer exists, redirect to its detail page
+                                  res.redirect(found_manufacturer.url);
+                              }
+                              else {
+                                  Manufacturer.findByIdAndUpdate( req.params.id, manufacturer, {}, function (err, themanufacturer) {
+                                      if(err) { return next(err); }
+                                        // Successful - redirect to manufacturer record.
+                                        res.redirect(themanufacturer.url);
+                                  });
+                              }
+  
+                          });
+  
+      }
+
+];
