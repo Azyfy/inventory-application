@@ -143,7 +143,7 @@ exports.car_create_post = [
                 },
             },  (err, results) => {
                     if(err) {return next(err); }
-            
+                    
                     res.render("car_form", { title: "Add a car", manufacturers: results.manufacturers, categories: results.categories, car: car, errors: errors.array() })
             }
             );

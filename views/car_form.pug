@@ -22,8 +22,8 @@ block content
                 for category in categories
                     if car
                         option(value=category._id selected=(category._id.toString()===car.category.id || car.category._id.toString() ? 'selected' : false) ) #{category.category}
-                    else
-                        option(value=category._id) #{category.name}
+                    else 
+                        option(value=category._id) #{category.category}
     div.form-group
         label(for='m_year_start') Picture:
         input#carpic.form-control(type='file', name='carpic' )
