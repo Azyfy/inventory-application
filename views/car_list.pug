@@ -4,11 +4,16 @@ block content
 
     h1= title 
 
-    ul
+    divd.d-flex.justify-content-around.flex-wrap
         each car in car_list
-            li 
-                a(href=car.url) #{car.model} 
-                | - #{car.manufacturer.name}
-                img(src=`../images/uploads/${car.imgname}` alt="Car image")
+            div.card.m-1(style="width: 18rem;")
+                a(href=car.url)
+                    img.card-img-top(src=`../images/uploads/${car.imgname}` alt="Car image ")
+                div.card-body.text-center
+                    h5.card-title
+                        a(href=car.url) #{car.model}
+                    p.card-text
+                        a.text-dark(href=car.manufacturer.url) #{car.manufacturer.name}
+                        
         else 
             li There are no cars

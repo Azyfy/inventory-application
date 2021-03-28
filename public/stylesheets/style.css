@@ -5,6 +5,7 @@ body {
 
 a {
   color: #00B7FF;
+  text-decoration: none;
 }
 
 #background {
@@ -15,3 +16,12 @@ a {
   background-position: center;
   height: 500px;
 }
+
+.imgdiv {
+  max-width: 500px;
+}
+.carimage {
+  width: 100%;
+}
+
+
