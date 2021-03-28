@@ -1,7 +1,6 @@
 const Car = require("../models/car");
 const Manufacturer = require("../models/manufacturer");
 const Category = require("../models/category");
-const CarsInStock = require("../models/carinstock");
 
 const async = require("async");
 

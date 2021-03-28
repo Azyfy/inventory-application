@@ -5,7 +5,6 @@ const multer = require("multer");
 
 // controller models
 const car_controller = require("../controllers/carController");
-const carsinstock_controller = require("../controllers/carinstockController");
 const category_controller = require("../controllers/categoryController");
 const manufacturer_controller = require("../controllers/manufacturerController");
 
@@ -42,26 +41,6 @@ router.post("/car/:id/delete", car_controller.car_delete_post);
 // get and post car update
 router.get("/car/:id/update", car_controller.car_update_get);
 router.post("/car/:id/update", car_controller.car_update_post);
-
-
-// CARSINSTOCK ROUTES
-// get carsinstock list
-router.get("/carsinstock_list", carsinstock_controller.carsinstock_list);
-
-// get and post carsinstock create form
-router.get("/carsinstock/create", carsinstock_controller.carsinstock_create_get);
-router.post("/carsinstock/create", carsinstock_controller.carsinstock_create_post);
-
-// get carsinstock details
-router.get("/carsinstock/:id", carsinstock_controller.carsinstock_detail);
-
-// get and post carsinstock delete
-router.get("/carsinstock/:id/delete", carsinstock_controller.carsinstock_delete_get);
-router.post("/carsinstock/:id/delete", carsinstock_controller.carsinstock_delete_post);
-
-// get and post carsinstock update
-router.get("/carsinstock/:id/update", carsinstock_controller.carsinstock_update_get);
-router.post("/carsinstock/:id/update", carsinstock_controller.carsinstock_update_post);
 
 
 // CATEGORY ROUTES
