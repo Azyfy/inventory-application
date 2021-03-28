@@ -27,11 +27,11 @@ exports.inventory_index = function (req, res)  {
 // Display car list
 exports.car_list = (req, res, next) => {
 
-    Car.find({}, "model manufacturer")
+    Car.find({}, "model imgname manufacturer")
         .populate("manufacturer")
         .exec( (err, list_cars) => {
             if (err) { return next(err); }
-
+ 
             res.render("car_list", { title: "Car List", car_list: list_cars });
         });
 
@@ -48,11 +48,6 @@ exports.car_detail = (req, res, next) => {
                 .populate("category")
                 .exec(callback);
         },
-        in_stock: (callback) => {
-
-            CarsInStock.find({ "car": req.params.id})
-                .exec(callback);
-        },
     },
         (err, results) => {
             if(err) { return next(err); }
@@ -63,7 +58,7 @@ exports.car_detail = (req, res, next) => {
                 return next(err);
             }
 
-            res.render("car_detail", { title: results.car.model, car: results.car, in_stock: results.in_stock[0] }) 
+            res.render("car_detail", { title: results.car.model, car: results.car }) 
         }
     );
 };
@@ -143,7 +138,7 @@ exports.car_create_post = [
                 },
             },  (err, results) => {
                     if(err) {return next(err); }
-                    
+
                     res.render("car_form", { title: "Add a car", manufacturers: results.manufacturers, categories: results.categories, car: car, errors: errors.array() })
             }
             );
@@ -154,6 +149,7 @@ exports.car_create_post = [
              car.save( (err) => {
                  if(err) { return next(err); }
                  //successful - redirect to new car
+
                  res.redirect(car.url);
              });
         }
