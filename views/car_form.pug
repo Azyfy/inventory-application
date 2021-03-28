@@ -3,7 +3,7 @@ extends inventory
 block content
   h1= title
 
-  form(method='POST' action='')
+  form(method='POST' action='' enctype="multipart/form-data")
     div.form-group
       label(for='model') Model:
       input#model.form-control(type='text', placeholder='Car model' name='model' required='true' value=(undefined===car ? '' : car.model) )
@@ -24,6 +24,9 @@ block content
                         option(value=category._id selected=(category._id.toString()===car.category.id || car.category._id.toString() ? 'selected' : false) ) #{category.category}
                     else
                         option(value=category._id) #{category.name}
+    div.form-group
+        label(for='m_year_start') Picture:
+        input#carpic.form-control(type='file', name='carpic' )
     div.form-group
         label(for='m_year_start') Year manufacture started:
         input#m_year_start.form-control(type='number', placeholder='Start of manufacturing' name='m_year_start' required='true' value=(undefined===car ? '' : car.m_year_start) )
