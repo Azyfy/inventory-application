@@ -210,7 +210,6 @@ exports.car_update_get = (req, res, next) => {
             err.status = 404;
             return next(err);
         }
-
         //is oki
         res.render("car_form", { title: "Update car", car: results.car, manufacturers: results.manufacturers, categories: results.categories })
     }
@@ -220,6 +219,7 @@ exports.car_update_get = (req, res, next) => {
 // Handle car update on POST
 exports.car_update_post = [
 
+    //NOTE: ERROR on update, everything in the form will display here as empty and throw empty form errors
     //same code as for creating just added _id(so no new is assigned) and at the end is to update
     // vali and sani
     body("model", "Model cant be empty").trim().isLength({min: 1}).escape(),
@@ -251,6 +251,7 @@ exports.car_update_post = [
             }
         );
 
+
         if(!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/errors messages.
 
@@ -264,8 +265,8 @@ exports.car_update_post = [
                 },
             },  (err, results) => {
                     if(err) {return next(err); }
-            
-                    res.render("car_form", { title: "Add a car", manufacturers: results.manufacturers, categories: results.categories, car: car, errors: errors.array() })
+
+                    res.render("car_form", { title: "Add car", manufacturers: results.manufacturers, categories: results.categories, car: car, errors: errors.array() })
             }
             );
             return;
