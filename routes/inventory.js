@@ -1,11 +1,26 @@
 var express = require('express');
 var router = express.Router();
 
+const multer = require("multer");
+
 // controller models
 const car_controller = require("../controllers/carController");
 const carsinstock_controller = require("../controllers/carinstockController");
 const category_controller = require("../controllers/categoryController");
 const manufacturer_controller = require("../controllers/manufacturerController");
+
+// multer storage
+const storage = multer.diskStorage({
+    destination: './public/images/uploads/',
+    filename: function(req, file, callback) {
+      callback(null, file.originalname);
+    }
+  });
+
+const upload = multer({ storage: storage });
+
+
+
 
 router.get('/',  car_controller.inventory_index);
 
@@ -15,7 +30,7 @@ router.get("/car_list", car_controller.car_list);
 
 // get and post car create form
 router.get("/car/create", car_controller.car_create_get);
-router.post("/car/create", car_controller.car_create_post);
+router.post("/car/create", upload.single('carpic'), car_controller.car_create_post);
 
 // get car details
 router.get("/car/:id", car_controller.car_detail);
