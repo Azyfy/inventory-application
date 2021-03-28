@@ -27,7 +27,7 @@ exports.inventory_index = function (req, res)  {
 
 // Display car list
 exports.car_list = (req, res, next) => {
-    
+
     Car.find({}, "model manufacturer")
         .populate("manufacturer")
         .exec( (err, list_cars) => {
@@ -101,8 +101,17 @@ exports.car_create_post = [
     body("top_speed", "Top speed cant be empty").trim().isLength({min: 1}).escape(),
     body("price", "Price cant be empty").trim().isLength({min: 1}).escape(),
 
+
     // Process request after validation and sanitization.
     (req, res, next) => {
+
+        // image
+        let filename = "cartemplate.jpeg";
+        if(req.file != undefined) {
+
+            filename = req.file.originalname;
+        }
+
 
         // Extract the validation errors from a request.
         const errors = validationResult(req);
@@ -113,6 +122,7 @@ exports.car_create_post = [
                 model: req.body.model,
                 manufacturer: req.body.manufacturer,
                 category: req.body.category,
+                imgname: filename,
                 m_year_start: req.body.m_year_start,
                 m_year_end: req.body.m_year_end,
                 horsepower: req.body.horsepower,
