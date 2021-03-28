@@ -16,7 +16,6 @@ var async = require('async')
 
 // models
 const Car = require('./models/car')
-const CarInStock = require('./models/carinstock')
 const Category = require('./models/category')
 var Manufacturer = require('./models/manufacturer')
 
@@ -30,7 +29,6 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 // data array
 const cars = []
-const carsinstock = []
 const categories = []
 const manufacturers = []
 
@@ -60,31 +58,12 @@ function carCreate(model, manufacturer, category, m_year_start, m_year_end, hors
   }  );
 }
 
-function carinstockCreate(car, in_stock, cb) {
-  let carinstock = new CarInStock(
-      { 
-          car: car,
-          in_stock: in_stock 
-        }
-      );
-       
-  carinstock.save(function (err) {
-    if (err) {
-      cb(err, null);
-      return;
-    }
-    console.log('New CarInStock: ' + carinstock);
-    carsinstock.push(carinstock)
-    cb(null, carinstock);
-  }   );
-}
 
 function manufacturerCreate(name, country,  cb) {
   let manufacturerdetail = { 
     name: name,
     country: country,
   }
-  // if (genre != false) bookdetail.genre = genre
     
   let manufacturer = new Manufacturer(manufacturerdetail);    
   manufacturer.save(function (err) {
@@ -103,8 +82,6 @@ function categoryCreate(category, cb) {
   categorydetail = { 
     category: category
   }    
-//  if (due_back != false) bookinstancedetail.due_back = due_back
-//  if (status != false) bookinstancedetail.status = status
     
   var category = new Category(categorydetail);    
   category.save(function (err) {
@@ -162,29 +139,9 @@ function createCar(cb) {
         cb);
 }
 
-
-function createCarInStock(cb) {
-    async.parallel([
-        function(callback) {
-          carinstockCreate(cars[0], 2, callback)
-        },
-        function(callback) {
-            carinstockCreate(cars[1], 9, callback)
-        },
-        function(callback) {
-            carinstockCreate(cars[2], 1, callback)
-        }
-        ],
-        // Optional callback
-        cb);
-}
-
-
-
 async.series([
     createManufacturerCategory,
-    createCar,
-    createCarInStock
+    createCar
 ],
 // Optional callback
 function(err, results) {
