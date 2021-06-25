@@ -14,6 +14,5 @@ A car inventory
 - MongoDB
 - Bootstrap
 
-
-
+Screenshot:
 ![Inventory-cars](https://user-images.githubusercontent.com/25674257/123481666-59383080-d604-11eb-8b7a-d4af38536a70.png)
