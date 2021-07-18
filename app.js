@@ -10,9 +10,11 @@ const inventoryRouter = require("./routes/inventory");
 
 const compression = require('compression');
 const helmet = require('helmet');
+const cors = require('cors')
 
 var app = express();
 
+app.use(cors())
 app.use(helmet());
 
 
