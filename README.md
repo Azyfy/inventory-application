@@ -9,7 +9,7 @@ A car inventory
 - Add new cars or delete them from the list
 - Upload an image for the car when adding a new one
 - Add manufacturers, delete or update them
-- Pick on of three categories for your cars
+- Pick one of three categories for your cars
 
 ###### Tools
 - Express
