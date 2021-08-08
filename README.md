@@ -10,6 +10,7 @@ A car inventory
 - Upload an image for the car when adding a new one
 - Add manufacturers, delete or update them
 - Pick one of three categories for your cars
+- Delete operations require a secret password "secretpassword"
 
 ###### Tools
 - Express
